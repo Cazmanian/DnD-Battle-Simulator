@@ -1,6 +1,6 @@
 import random
 
-
+#Defining the Character class and sub function: roll_dice, attack
 class Character:
     def __init__(self, name, health, armor_class, attack_bonus, damage_dice):
         self.name = name
@@ -24,7 +24,7 @@ class Character:
             print(f'{self.name} hits {enemy.name} for {damage} damage! {enemy.name} health: {enemy.health}')
         else: 
             print(f'{self.name} misses {enemy.name}.')
-
+#Defining the battle simulator parts
 def simulate_battle(player, enemy):
     turn = 1
     while player.health > 0 and enemy.health > 0:
@@ -46,10 +46,13 @@ def simulate_battle(player, enemy):
         print(f'\n{enemy.name} wins!')
 
 
-
+#Predefined characters
 hero = Character("hero", 42, 16, 5, "2d8")
 goblin = Character("Goblin", 20, 13, 3, "1d6")
 orc = Character("Orc", 35, 13, 3, "1d10")
 
-simulate_battle(hero, orc)
+simulate_battle(hero, goblin)
 
+#add list of enemies to choose from
+#add a way for you to add your character name and own stats//same for enemy
+#adds spells and choose weapons
