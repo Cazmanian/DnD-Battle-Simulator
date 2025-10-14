@@ -1,0 +1,55 @@
+import random
+
+
+class Character:
+    def __init__(self, name, health, armor_class, attack_bonus, damage_dice):
+        self.name = name
+        self.health = health
+        self.armor_class = armor_class
+        self.attack_bonus = attack_bonus
+        self.damage_dice = damage_dice
+
+    def roll_dice(self, dice_string):
+        num_dice, die_size = map(int, dice_string.split('d'))
+        total_damage = sum(random.randint(1, die_size) for _ in range(num_dice))
+        return total_damage
+
+    def attack(self, enemy):
+        attack_roll = random.randint(1, 20) + self.attack_bonus
+        print(f'{self.name} attacks {enemy.name} (Attack Roll: {attack_roll})')
+
+        if attack_roll >= enemy.armor_class:
+            damage = self.roll_dice(self.damage_dice)
+            enemy.health -= damage
+            print(f'{self.name} hits {enemy.name} for {damage} damage! {enemy.name} health: {enemy.health}')
+        else: 
+            print(f'{self.name} misses {enemy.name}.')
+
+def simulate_battle(player, enemy):
+    turn = 1
+    while player.health > 0 and enemy.health > 0:
+        print(f'\n--- Turn {turn} ---')
+        player.attack(enemy)
+        if enemy.health <= 0:
+            print(f'{enemy.name} has been defeated!')
+            break
+
+        enemy.attack(player)
+        if player.health <= 0:
+            print(f'{player.name}  has been defeated!')
+            break
+        turn += 1
+
+    if player.health > 0:
+        print(f'\n{player.name} wins!')
+    else: 
+        print(f'\n{enemy.name} wins!')
+
+
+
+hero = Character("hero", 42, 16, 5, "2d8")
+goblin = Character("Goblin", 20, 13, 3, "1d6")
+orc = Character("Orc", 35, 13, 3, "1d10")
+
+simulate_battle(hero, orc)
+
