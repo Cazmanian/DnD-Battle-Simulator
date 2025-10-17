@@ -21,9 +21,32 @@ class Character:
         if attack_roll >= enemy.armor_class:
             damage = self.roll_dice(self.damage_dice)
             enemy.health -= damage
-            print(f'{self.name} hits {enemy.name} for {damage} damage! {enemy.name} health: {enemy.health}')
+            print(f'💥{self.name} hits {enemy.name} for {damage} damage! {enemy.name} health: {enemy.health}')
         else: 
-            print(f'{self.name} misses {enemy.name}.')
+            print(f'❌{self.name} misses {enemy.name}.')
+
+# Game setup data
+
+enemies = {
+    "Goblin": Character("Goblin", 20, 13, 3, "1d6"),
+    "Orc": Character("Orc", 35, 13, 4, "1d10"),
+    "Skeleton": Character("Skeleton", 25, 12, 2, "1d8"),
+    "Bandit": Character("Bandit", 30, 14, 3, "1d8")
+}
+
+weapons = {
+    "Sword": {"damage": "1d8", "bonus": 5},
+    "Axe": {"damage": "1d10", "bonus": 4},
+    "Dagger": {"damage": "1d4", "bonus": 6},
+}
+
+spells = {
+    "Firebolt": {"damage": "1d10", "bonus": 5}, 
+    "Ice Spike": {"damage": "2d4", "bonus": 4}, 
+    "Magic Missile": {"damage": "3d4", "bonus": 3}, 
+}
+
+
 #Defining the battle simulator parts
 def simulate_battle(player, enemy):
     turn = 1
