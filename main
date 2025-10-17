@@ -47,6 +47,29 @@ spells = {
 }
 
 
+# Functions for setup
+
+def create_player():
+    print("\n--- Character  Creation ---")
+    name = input("Enter your character's name: ")
+    health = int(input("Enter your character's health (e.g., 40): "))
+    armor_class = int(input("Enter your character's armor class (e.g., 15): "))
+
+    print("\nChoose your weapon: ")
+    for i, weapon in enumerate(weapons.keys(), start=1):
+        print(f"{i}. {weapon}")
+    weapon_choice = list(weapons.keys())[int(input("> ")) - 1]
+
+    for i, spell in enumerate(spells.keys(), start = 1):
+        print(f"{i}. {spell}")
+    spell_choice = list(spells.keys())[int(input("> ")) - 1]
+
+    attack_bonus = weapons[weapon_choice]["bonus"]
+    damage_dice = weapons[weapon_choice]["damage"]
+
+    print(f"\n{name} is armed with a {weapon_choice} and knows {spell_choice}!")
+    return Character(name, health, armor_class, attack_bonus, damage_dice)
+
 #Defining the battle simulator parts
 def simulate_battle(player, enemy):
     turn = 1
