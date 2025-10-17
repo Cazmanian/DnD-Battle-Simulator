@@ -21,9 +21,9 @@ class Character:
         if attack_roll >= enemy.armor_class:
             damage = self.roll_dice(self.damage_dice)
             enemy.health -= damage
-            print(f'💥{self.name} hits {enemy.name} for {damage} damage! {enemy.name} health: {enemy.health}')
+            print(f'💥 {self.name} hits {enemy.name} for {damage} damage! {enemy.name} health: {enemy.health}')
         else: 
-            print(f'❌{self.name} misses {enemy.name}.')
+            print(f'❌ {self.name} misses {enemy.name}.')
 
 # Game setup data
 
@@ -70,34 +70,45 @@ def create_player():
     print(f"\n{name} is armed with a {weapon_choice} and knows {spell_choice}!")
     return Character(name, health, armor_class, attack_bonus, damage_dice)
 
+def choose_enemy():
+    print("\n--- Choose Your Enemy ---")
+    for i, name in enumerate(enemies.keys(), start = 1):
+        print(f"{i}. {name}")
+    choice = int(input("> ")) -  1
+    enemy_name = list(enemies.keys())[choice]
+    enemy = enemies[enemy_name]
+    return Character(enemy.name, enemy.health, enemy.armor_class, enemy.attack_bonus, enemy.damage_dice)
+
 #Defining the battle simulator parts
 def simulate_battle(player, enemy):
+    print(f"\n⚔️ Battle Start! {player.name} vs {enemy.name} ⚔️")
     turn = 1
     while player.health > 0 and enemy.health > 0:
         print(f'\n--- Turn {turn} ---')
         player.attack(enemy)
         if enemy.health <= 0:
-            print(f'{enemy.name} has been defeated!')
+            print(f'\n🏆 {enemy.name} has been defeated!')
             break
 
         enemy.attack(player)
         if player.health <= 0:
-            print(f'{player.name}  has been defeated!')
+            print(f'\n💀 {player.name}  has been defeated!')
             break
         turn += 1
-
-    if player.health > 0:
-        print(f'\n{player.name} wins!')
+    
+    print("\n --- Battle Over ---")
+    if player.health > 0: 
+        print(f"{player.name} wins with {player.health} HP remaining!")
     else: 
-        print(f'\n{enemy.name} wins!')
+        print(f"{enemy.name} wins with {enemy.health} HP remaining!")
 
+#main
 
-#Predefined characters
-hero = Character("hero", 42, 16, 5, "2d8")
-goblin = Character("Goblin", 20, 13, 3, "1d6")
-orc = Character("Orc", 35, 13, 3, "1d10")
+if __name__ == "__main__":
+    player = create_player()
+    enemy = choose_enemy()
+    simulate_battle(player, enemy)
 
-simulate_battle(hero, goblin)
 
 #add list of enemies to choose from
 #add a way for you to add your character name and own stats//same for enemy
